@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html class="light" dir="rtl" lang="ar">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>بيكسورا - النسخة النهائية المطورة</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700;800&family=Noto+Sans+Arabic:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec1313",
+                        "background-light": "#ffffff",
+                        "background-dark": "#1a0808",
+                        "neutral-light": "#f9fafb",
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "Noto Sans Arabic", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "3xl": "1.5rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        body {
+            font-family: 'Noto Sans Arabic', 'Spline Sans', sans-serif;
+        }
+        .grid-lines {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px);
+        }
+        .hero-glow {
+            background: radial-gradient(circle at 50% 50%, rgba(236, 19, 19, 0.08) 0%, transparent 60%);
+        }
+        .geometric-pattern {
+            background-color: #ffffff;
+            background-image:  radial-gradient(#ec131308 1px, transparent 1px), radial-gradient(#ec131308 1px, #ffffff 1px);
+            background-size: 40px 40px;
+            background-position: 0 0,20px 20px;
+        }
+        .parallax-icon {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+        .process-line {
+            border-left: 2px dashed #ec1313;
+            width: 0;
+            height: 100%;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 0;
+            opacity: 0.3;
+        }
+        .map-container-silver {
+            filter: grayscale(1) invert(0) brightness(1) contrast(1);
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        .reveal-on-scroll {
+            opacity: 0;
+        }
+        /* New Portfolio Integration Styles */
+        .project-card {
+            @apply bg-white rounded-3xl overflow-hidden shadow-[0_10px_40px_-15px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_50px_-10px_rgba(236,19,19,0.15)] transition-all duration-500;
+        }
+        .pill-tab {
+            @apply px-8 py-3 rounded-full text-sm font-bold transition-all duration-300 border border-transparent;
+        }
+        .pill-tab.active {
+            @apply bg-primary text-white shadow-lg shadow-primary/30;
+        }
+        .pill-tab:not(.active) {
+            @apply bg-white text-slate-500 hover:border-primary/20 hover:text-primary;
+        }
+    </style>
+</head>
+
+<body class="bg-background-light text-slate-900 antialiased overflow-x-hidden">
+    <div class="fixed inset-0 z-0 pointer-events-none grid-lines">
+        <div class="absolute inset-0 hero-glow"></div>
+    </div>
+    <div class="relative z-10 flex flex-col min-h-screen">
+        <header
+            class="w-full px-6 lg:px-20 py-6 flex items-center justify-between border-b border-slate-100 bg-white/80 backdrop-blur-md sticky top-0 z-50">
+            <div class="flex items-center gap-3">
+                <div class="bg-primary p-2 rounded-lg flex items-center justify-center">
+                    <span class="material-symbols-outlined text-white text-2xl">rocket_launch</span>
+                </div>
+                <h1 class="text-2xl font-black tracking-tighter text-slate-900">بيكسورا<span
+                        class="text-primary">.</span></h1>
+            </div>
+            <nav class="hidden md:flex items-center gap-10">
+                <a class="text-sm font-bold text-primary" href="#">الرئيسية</a>
+                <a class="text-sm font-medium hover:text-primary transition-colors text-slate-600"
+                    href="#services">خدماتنا</a>
+                <a class="text-sm font-medium hover:text-primary transition-colors text-slate-600" href="#process">رحلة
+                    الإبداع</a>
+                <a class="text-sm font-medium hover:text-primary transition-colors text-slate-600"
+                    href="#portfolio">أعمالنا</a>
+            </nav>
+            <div class="flex items-center gap-4">
+                <button
+                    class="hidden sm:flex items-center gap-2 px-6 py-2.5 bg-primary text-white text-sm font-bold rounded-lg hover:bg-primary/90 transition-all shadow-lg shadow-primary/20">
+                    تواصل معنا
+                    <span class="material-symbols-outlined text-sm">arrow_back_ios</span>
+                </button>
+                <button class="md:hidden text-slate-900">
+                    <span class="material-symbols-outlined text-3xl">menu</span>
+                </button>
+            </div>
+        </header>
+        <main
+            class="flex-1 flex flex-col items-center justify-center px-6 lg:px-20 pt-24 pb-24 text-center relative overflow-hidden">
+            <div class="absolute top-[15%] right-[12%] parallax-icon flex flex-col items-center gap-2 opacity-60 md:opacity-100"
+                style="animation-duration: 4s;">
+                <div
+                    class="w-16 h-16 bg-white shadow-xl shadow-primary/10 rounded-2xl flex items-center justify-center border border-primary/10">
+                    <span class="material-symbols-outlined text-primary text-3xl">movie_filter</span>
+                </div>
+                <span
+                    class="text-[10px] font-bold text-primary uppercase tracking-widest bg-white/50 px-2 py-0.5 rounded">فيديو</span>
+            </div>
+            <div class="absolute top-[60%] left-[8%] parallax-icon flex flex-col items-center gap-2 opacity-60 md:opacity-100"
+                style="animation-duration: 5s;">
+                <div
+                    class="w-20 h-20 bg-white shadow-xl shadow-primary/10 rounded-2xl flex items-center justify-center border border-primary/10">
+                    <span class="material-symbols-outlined text-primary text-4xl">share_reviews</span>
+                </div>
+                <span
+                    class="text-[10px] font-bold text-primary uppercase tracking-widest bg-white/50 px-2 py-0.5 rounded">سوشيال
+                    ميديا</span>
+            </div>
+            <div class="absolute bottom-[20%] right-[20%] parallax-icon flex flex-col items-center gap-2 opacity-60 md:opacity-100"
+                style="animation-duration: 3s;">
+                <div
+                    class="w-14 h-14 bg-white shadow-xl shadow-primary/10 rounded-2xl flex items-center justify-center border border-primary/10">
+                    <span class="material-symbols-outlined text-primary text-2xl">terminal</span>
+                </div>
+                <span
+                    class="text-[10px] font-bold text-primary uppercase tracking-widest bg-white/50 px-2 py-0.5 rounded">برمجة</span>
+            </div>
+            <div class="absolute top-[30%] left-[25%] parallax-icon flex flex-col items-center gap-2 opacity-60 md:opacity-100"
+                style="animation-duration: 4.5s;">
+                <div
+                    class="w-16 h-16 bg-white shadow-xl shadow-primary/10 rounded-2xl flex items-center justify-center border border-primary/10">
+                    <span class="material-symbols-outlined text-primary text-3xl">insights</span>
+                </div>
+                <span
+                    class="text-[10px] font-bold text-primary uppercase tracking-widest bg-white/50 px-2 py-0.5 rounded">خطة
+                    تسويقية</span>
+            </div>
+            <div class="max-w-4xl mx-auto space-y-10 relative z-10 fade-in-up">
+                <div
+                    class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 border border-primary/10 text-primary text-xs font-bold uppercase tracking-widest mb-2">
+                    <span class="relative flex h-2 w-2">
+                        <span
+                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                    </span>
+                    وكالة الابتكار الرقمي الأولى
+                </div>
+                <div class="space-y-6">
+                    <h1 class="text-6xl md:text-7xl lg:text-8xl font-black leading-[1.1] text-slate-900">
+                        نصنع <span class="text-primary">مستقبلك</span> <br />
+                        الرقمي المتكامل
+                    </h1>
+                    <p class="text-xl md:text-2xl text-slate-500 font-medium max-w-2xl mx-auto leading-relaxed">
+                        نحول رؤيتك إلى واقع رقمي ملموس بلمسة إبداعية
+                    </p>
+                </div>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-5 pt-4">
+                    <button
+                        class="w-full sm:w-auto px-12 py-4 bg-primary text-white text-lg font-bold rounded-xl hover:scale-105 transition-transform shadow-2xl shadow-primary/30">
+                        ابدأ مشروعك الآن
+                    </button>
+                    <button
+                        class="w-full sm:w-auto px-10 py-4 bg-white border border-slate-200 text-slate-700 text-lg font-bold rounded-xl hover:bg-slate-50 transition-all flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined text-primary">play_circle</span>
+                        شاهد أعمالنا
+                    </button>
+                </div>
+            </div>
+        </main>
+        <section class="px-6 lg:px-20 py-24 bg-slate-50/50 border-y border-slate-100 relative overflow-hidden"
+            id="services">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6 reveal-on-scroll">
+                <div class="max-w-xl">
+                    <h2 class="text-primary text-sm font-bold tracking-widest uppercase mb-3">خدماتنا المتميزة</h2>
+                    <h3 class="text-3xl md:text-5xl font-black text-slate-900">نحن نوفر حلولاً شاملة لنمو علامتك
+                        التجارية</h3>
+                </div>
+                <a class="text-primary font-bold flex items-center gap-2 border-b-2 border-primary/20 pb-1 hover:border-primary transition-all"
+                    href="#">
+                    اكتشف كل الخدمات
+                    <span class="material-symbols-outlined">trending_flat</span>
+                </a>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="group p-8 rounded-2xl bg-white border border-slate-100 hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 reveal-on-scroll"
+                    style="animation-delay: 0.1s;">
+                    <div
+                        class="w-14 h-14 rounded-xl bg-primary/5 flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-all">
+                        <span class="material-symbols-outlined text-3xl">share_reviews</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-slate-900 mb-4">التسويق الرقمي</h4>
+                    <p class="text-slate-500 leading-relaxed mb-6">إستراتيجيات نمو مبنية على البيانات لتعزيز تواجدك على
+                        منصات التواصل الاجتماعي.</p>
+                </div>
+                <div class="group p-8 rounded-2xl bg-white border border-slate-100 hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 reveal-on-scroll"
+                    style="animation-delay: 0.2s;">
+                    <div
+                        class="w-14 h-14 rounded-xl bg-primary/5 flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-all">
+                        <span class="material-symbols-outlined text-3xl">terminal</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-slate-900 mb-4">تطوير المواقع</h4>
+                    <p class="text-slate-500 leading-relaxed mb-6">نصمم ونبرمج مواقع إلكترونية متجاوبة، سريعة، وآمنة
+                        تضمن أفضل تجربة مستخدم.</p>
+                </div>
+                <div class="group p-8 rounded-2xl bg-white border border-slate-100 hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 reveal-on-scroll"
+                    style="animation-delay: 0.3s;">
+                    <div
+                        class="w-14 h-14 rounded-xl bg-primary/5 flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-all">
+                        <span class="material-symbols-outlined text-3xl">movie_filter</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-slate-900 mb-4">المحتوى البصري</h4>
+                    <p class="text-slate-500 leading-relaxed mb-6">تحويل الأفكار إلى قصص بصرية مذهلة من خلال تحرير
+                        الفيديو المتقدم وتصاميم الموشن جرافيك.</p>
+                </div>
+            </div>
+        </section>
+        <section class="py-32 bg-white relative overflow-hidden geometric-pattern" id="process">
+            <div class="container mx-auto px-6 lg:px-20 relative">
+                <div class="text-center mb-24 relative z-10 reveal-on-scroll">
+                    <h2 class="text-primary text-sm font-bold tracking-[0.3em] uppercase mb-4">من الفكرة إلى الواقع</h2>
+                    <h3 class="text-4xl md:text-6xl font-black text-slate-900">رحلة <span
+                            class="text-primary">الإبداع</span> في بيكسورا</h3>
+                </div>
+                <div class="relative max-w-5xl mx-auto">
+                    <div class="process-line"></div>
+                    <div class="space-y-32 relative z-10">
+                        <div class="flex flex-col md:flex-row items-center gap-12 group reveal-on-scroll">
+                            <div class="w-full md:w-1/2 md:text-left text-center order-2 md:order-1">
+                                <div class="flex items-center gap-4 justify-center md:justify-start mb-4">
+                                    <span
+                                        class="material-symbols-outlined text-4xl text-primary parallax-icon">query_stats</span>
+                                    <h4 class="text-2xl font-bold text-slate-900">التحليل والاستراتيجية</h4>
+                                </div>
+                                <p class="text-slate-500 leading-relaxed text-lg">نبدأ بفهم عميق لأهداف عملك وجمهورك
+                                    المستهدف لنرسم خارطة طريق دقيقة تضمن النجاح.</p>
+                            </div>
+                            <div
+                                class="relative flex items-center justify-center w-32 h-32 md:w-40 md:h-40 shrink-0 order-1 md:order-2">
+                                <div
+                                    class="absolute inset-0 bg-primary/10 rounded-full scale-110 group-hover:scale-125 transition-transform duration-500">
+                                </div>
+                                <div class="text-6xl font-black text-primary absolute">01</div>
+                            </div>
+                            <div class="hidden md:block w-1/2 order-3"></div>
+                        </div>
+                        <div class="flex flex-col md:flex-row items-center gap-12 group reveal-on-scroll"
+                            style="animation-delay: 0.2s;">
+                            <div class="hidden md:block w-1/2 order-1"></div>
+                            <div
+                                class="relative flex items-center justify-center w-32 h-32 md:w-40 md:h-40 shrink-0 order-2">
+                                <div
+                                    class="absolute inset-0 bg-primary/10 rounded-full scale-110 group-hover:scale-125 transition-transform duration-500">
+                                </div>
+                                <div class="text-6xl font-black text-primary absolute">02</div>
+                            </div>
+                            <div class="w-full md:w-1/2 md:text-right text-center order-3">
+                                <div class="flex items-center gap-4 justify-center md:justify-end mb-4">
+                                    <h4 class="text-2xl font-bold text-slate-900">التصميم الإبداعي</h4>
+                                    <span class="material-symbols-outlined text-4xl text-primary parallax-icon"
+                                        style="animation-delay: 1s;">draw</span>
+                                </div>
+                                <p class="text-slate-500 leading-relaxed text-lg">نحول الاستراتيجية إلى تجارب بصرية
+                                    فريدة تعكس هوية علامتك التجارية وتترك انطباعاً لا ينسى.</p>
+                            </div>
+                        </div>
+                        <div class="flex flex-col md:flex-row items-center gap-12 group reveal-on-scroll"
+                            style="animation-delay: 0.3s;">
+                            <div class="w-full md:w-1/2 md:text-left text-center order-2 md:order-1">
+                                <div class="flex items-center gap-4 justify-center md:justify-start mb-4">
+                                    <span class="material-symbols-outlined text-4xl text-primary parallax-icon"
+                                        style="animation-delay: 2s;">code</span>
+                                    <h4 class="text-2xl font-bold text-slate-900">التنفيذ والبرمجة</h4>
+                                </div>
+                                <p class="text-slate-500 leading-relaxed text-lg">باستخدام أحدث التقنيات، نحول التصاميم
+                                    إلى منتجات رقمية حية، سريعة، ومتجاوبة بدقة متناهية.</p>
+                            </div>
+                            <div
+                                class="relative flex items-center justify-center w-32 h-32 md:w-40 md:h-40 shrink-0 order-1 md:order-2">
+                                <div
+                                    class="absolute inset-0 bg-primary/10 rounded-full scale-110 group-hover:scale-125 transition-transform duration-500">
+                                </div>
+                                <div class="text-6xl font-black text-primary absolute">03</div>
+                            </div>
+                            <div class="hidden md:block w-1/2 order-3"></div>
+                        </div>
+                        <div class="flex flex-col md:flex-row items-center gap-12 group reveal-on-scroll"
+                            style="animation-delay: 0.4s;">
+                            <div class="hidden md:block w-1/2 order-1"></div>
+                            <div
+                                class="relative flex items-center justify-center w-32 h-32 md:w-40 md:h-40 shrink-0 order-2">
+                                <div
+                                    class="absolute inset-0 bg-primary/10 rounded-full scale-110 group-hover:scale-125 transition-transform duration-500">
+                                </div>
+                                <div class="text-6xl font-black text-primary absolute">04</div>
+                            </div>
+                            <div class="w-full md:w-1/2 md:text-right text-center order-3">
+                                <div class="flex items-center gap-4 justify-center md:justify-end mb-4">
+                                    <h4 class="text-2xl font-bold text-slate-900">الانطلاق والنمو</h4>
+                                    <span class="material-symbols-outlined text-4xl text-primary parallax-icon"
+                                        style="animation-delay: 3s;">auto_graph</span>
+                                </div>
+                                <p class="text-slate-500 leading-relaxed text-lg">لا ينتهي عملنا بالإطلاق؛ بل نرافقك في
+                                    رحلة النمو عبر التحليل المستمر والتطوير الدائم للأداء.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-32 bg-slate-50 border-t border-slate-200" id="portfolio">
+            <div class="max-w-[1440px] mx-auto px-6 lg:px-20">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-12 mb-20 reveal-on-scroll">
+                    <div class="max-w-2xl">
+                        <div class="flex items-center gap-2 mb-6">
+                            <span class="w-12 h-[2px] bg-primary"></span>
+                            <span class="text-primary font-bold tracking-[0.2em] uppercase text-xs">إبداعات
+                                بيكسورا</span>
+                        </div>
+                        <h2 class="text-5xl md:text-7xl font-black mb-8 text-slate-900 leading-[1.1]">نصنع مستقبلاً
+                            <span class="text-primary">رقمياً.</span></h2>
+                    </div>
+                    <div class="flex flex-wrap gap-3 bg-white p-2 rounded-[2rem] shadow-sm border border-slate-100">
+                        <button class="pill-tab active">الكل</button>
+                        <button class="pill-tab">سوشيال ميديا</button>
+                        <button class="pill-tab">تطبيقات</button>
+                        <button class="pill-tab">فيديو</button>
+                        <button class="pill-tab">مواقع</button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-12 gap-8 lg:gap-12">
+                    <div class="col-span-12 lg:col-span-7 project-card group cursor-pointer reveal-on-scroll">
+                        <div class="relative aspect-[16/10] overflow-hidden">
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEqSX3wPlAkhb5LOPTuPeyRrujocIOxZyYNogF_koQ3gcUtCHfo0bEekBc6XguKLPUy2y4OMXeLz4IuonREEWOtxjl0SImtgDd5HPvpYo3gLILQj1cM17okOqIuOcfYU7-OFmwq-aUWC986bidOneR1qCdaOA6n2kR1gHYCe9D7Mrfqjp0zy8HjxU1SFzIimRm8Cj-cS1fm-MwpnEOcZjrd0I6LjtbNwaAcOgCOcpvWFhUOkCU4GVSIzsQFEI9iwAi6h9sj8nwNRU"
+                                class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                            </div>
+                        </div>
+                        <div class="p-8 lg:p-10 flex justify-between items-end">
+                            <div>
+                                <span class="text-primary font-bold text-sm mb-2 block">برمجة وتطوير</span>
+                                <h3 class="text-3xl font-black text-slate-900">منصة بيكسورا داشبورد</h3>
+                            </div>
+                            <div
+                                class="size-14 rounded-full border border-slate-200 flex items-center justify-center group-hover:bg-primary group-hover:border-primary group-hover:text-white transition-all duration-300">
+                                <span class="material-symbols-outlined">arrow_outward</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-span-12 lg:col-span-5 project-card group cursor-pointer reveal-on-scroll">
+                        <div class="relative aspect-[4/5] overflow-hidden">
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6l6gT-Au3VTLzsfNBb4OOODp5lJGnEGG6I39NXTmloxI0HzXEC3UNXls4-7TJ4ITzo2tR7wQ0k1-yD2ZKjLuytA1VgNwY0IZiYiuKQFmq7xh_pO9uosLj67rZcMSu6ljcdB8LFvMex18547uHnjNCzvF6vP-duKyvNIWjFkAzDWarkiO9BPQW3MXkC-GU50TXknwzZRkt_R2gi-TqHMagKgWshNacTAecl5uziJr9h6lFQYVFR0lmON4m--P90hcZv_VBT6U_Mlk"
+                                class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        </div>
+                        <div class="p-8 flex justify-between items-end">
+                            <div>
+                                <span class="text-primary font-bold text-sm mb-2 block">تطبيقات الجوال</span>
+                                <h3 class="text-2xl font-black text-slate-900">تطبيق وصلني الذكي</h3>
+                            </div>
+                            <div
+                                class="size-12 rounded-full border border-slate-200 flex items-center justify-center group-hover:bg-primary group-hover:border-primary group-hover:text-white transition-all duration-300">
+                                <span class="material-symbols-outlined">arrow_outward</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="col-span-12 my-12 py-16 bg-primary rounded-[3rem] relative overflow-hidden flex flex-wrap justify-around items-center gap-12 text-center shadow-2xl reveal-on-scroll">
+                        <div
+                            class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10">
+                        </div>
+                        <div class="relative z-10">
+                            <p class="text-5xl font-black text-white mb-2 tracking-tighter">500+</p>
+                            <p class="text-white/80 font-bold text-sm">مشروع مكتمل</p>
+                        </div>
+                        <div class="relative z-10">
+                            <p class="text-5xl font-black text-white mb-2 tracking-tighter">120+</p>
+                            <p class="text-white/80 font-bold text-sm">عميل سعيد</p>
+                        </div>
+                        <div class="relative z-10">
+                            <p class="text-5xl font-black text-white mb-2 tracking-tighter">15+</p>
+                            <p class="text-white/80 font-bold text-sm">جائزة تصميم</p>
+                        </div>
+                        <div class="relative z-10">
+                            <p class="text-5xl font-black text-white mb-2 tracking-tighter">98%</p>
+                            <p class="text-white/80 font-bold text-sm">نسبة الرضا</p>
+                        </div>
+                    </div>
+
+                    <div class="col-span-12 md:col-span-4 project-card group cursor-pointer reveal-on-scroll">
+                        <div class="relative aspect-square overflow-hidden">
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9cCoFm9sHlte6N7JsAlw6SFs9nfi8zoSaLhopSwMm6D1xEzfl-Dd8R9uezPobtDrvCziyx5-XjTz4oPt6YR8wfjUy2JDctO8P8u54d7_pAbxZgc46ii2ZlzaSPn9k4G3ZX7yXXWIYmZ0uzCoiAcFIC2wGUGLFrVOSuYCilUMaDkyoXaqL1wXqWyyfs3ENb6Ep8Uh-CwzK0WR4AtWOvc3OVwJ_Mi4dJotziv7VC05jUQwhkFxDNieZL2sluXPwxtuIAmLsT_NJw08"
+                                class="absolute inset-0 w-full h-full object-cover">
+                        </div>
+                        <div class="p-8"><span class="text-primary font-bold text-sm mb-2 block">هوية بصرية</span>
+                            <h3 class="text-2xl font-black text-slate-900">العلامة التجارية لشركة ليفت</h3>
+                        </div>
+                    </div>
+
+                    <div class="col-span-12 md:col-span-8 project-card group cursor-pointer reveal-on-scroll">
+                        <div class="relative aspect-[16/9] overflow-hidden">
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqXQ2fEYyy4y2t6PBp--0wt1tzsNX9yfw7vKJkjcvZYxq2zamCO10a2zZoJv6fZ_Ng-UT6UJC-QOSd-tB0-ilCuqVGNojanC-Ue8g7yj64-qSQxHYVUshI3Bshs96lxUz_3FZNOkdwoBNquw0zEdhtxz9ZOW3GH2nea1W9UcRkkVi-_51YmhnXkNlYhwmrlu2gyIHM4IR5wFQeykbo3bA-0N4P2fTnrc9MLO-2BKcnN7xGL5LvZdtoZu-u_Z8nyLSXpZYeZt5w0bU"
+                                class="absolute inset-0 w-full h-full object-cover">
+                        </div>
+                        <div class="p-8 flex justify-between items-center">
+                            <div><span class="text-primary font-bold text-sm mb-2 block">إنتاج فيديو</span>
+                                <h3 class="text-3xl font-black text-slate-900">فيلم "رؤية 2030" القصير</h3>
+                            </div>
+                            <div class="bg-primary text-white p-4 rounded-2xl shadow-lg shadow-primary/30"><span
+                                    class="material-symbols-outlined">play_arrow</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-24 bg-primary relative overflow-hidden">
+            <div class="absolute inset-0 opacity-10">
+                <div class="grid-lines w-full h-full"></div>
+            </div>
+            <div class="container mx-auto px-6 lg:px-20 relative z-10 text-center text-white reveal-on-scroll">
+                <h2 class="text-5xl md:text-7xl font-black mb-6">هل أنت مستعد لبدء نجاحك؟</h2>
+                <p class="text-xl md:text-2xl font-medium mb-12 opacity-90 max-w-3xl mx-auto">
+                    نحن هنا لنحول تطلعاتك إلى إنجازات رقمية ملموسة. انضم إلينا اليوم وابدأ رحلة التميز.
+                </p>
+                <button
+                    class="px-14 py-5 bg-white text-primary text-xl font-black rounded-2xl hover:bg-slate-100 hover:scale-105 transition-all shadow-2xl">
+                    ابدأ الآن
+                </button>
+            </div>
+        </section>
+        <section class="py-24 bg-white border-t border-slate-100" id="contact-map">
+            <div class="px-6 lg:px-20 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="space-y-12 reveal-on-scroll">
+                    <div>
+                        <h2 class="text-primary text-sm font-bold tracking-widest uppercase mb-4">تواصل معنا</h2>
+                        <h3 class="text-4xl font-black text-slate-900 leading-tight">دعنا نبدأ في بناء <span
+                                class="text-primary">نجاحك</span> القادم</h3>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-5 group">
+                            <div
+                                class="w-12 h-12 rounded-full bg-primary/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
+                                <span class="material-symbols-outlined">mail</span>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-400 font-bold uppercase tracking-tighter">راسلنا على</p>
+                                <p class="text-slate-900 font-bold">hello@pixora.agency</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-5 group">
+                            <div
+                                class="w-12 h-12 rounded-full bg-primary/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
+                                <span class="material-symbols-outlined">location_on</span>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-400 font-bold uppercase tracking-tighter">موقعنا</p>
+                                <p class="text-slate-900 font-bold">مركز الابتكار الرقمي، الرياض، السعودية</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="relative w-full h-[500px] rounded-[2.5rem] overflow-hidden shadow-2xl shadow-primary/10 border-4 border-white reveal-on-scroll">
+                    <div class="absolute inset-0 map-container-silver">
+                        <iframe allowfullscreen="" height="100%" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d115933.19777174672!2d46.61110052210815!3d24.76118466657805!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e2f03890d48939b%3A0x60a964032d164536!2sRiyadh%20Saudi%20Arabia!5e0!3m2!1sen!2sus!4v1715634567890!5m2!1sen!2sus"
+                            style="border:0;" width="100%">
+                        </iframe>
+                    </div>
+                    <div class="absolute inset-0 pointer-events-none bg-white/40"></div>
+                    <div class="absolute top-[45%] left-[50%] flex flex-col items-center">
+                        <div
+                            class="w-10 h-10 bg-primary rounded-full border-4 border-white shadow-lg flex items-center justify-center animate-bounce">
+                            <span class="material-symbols-outlined text-white text-sm">location_on</span>
+                        </div>
+                    </div>
+                    <div
+                        class="absolute top-6 left-6 bg-white/95 backdrop-blur p-4 rounded-2xl shadow-xl flex items-center gap-3">
+                        <div class="w-3 h-3 rounded-full bg-primary animate-pulse"></div>
+                        <p class="text-sm font-bold text-slate-900">مقرنا الرئيسي في الرياض</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer class="px-6 lg:px-20 py-12 border-t border-slate-100 bg-white">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+                <div class="flex items-center gap-3">
+                    <div class="bg-primary p-2 rounded-lg flex items-center justify-center">
+                        <span class="material-symbols-outlined text-white text-xl">rocket_launch</span>
+                    </div>
+                    <span class="text-xl font-black text-slate-900">بيكسورا.</span>
+                </div>
+                <div class="text-center text-slate-400 text-xs font-medium">
+                    © ٢٠٢٤ بيكسورا - جميع الحقوق محفوظة.
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script>
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-up');
+                    entry.target.style.opacity = 1;
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        document.querySelectorAll('.reveal-on-scroll').forEach((el) => observer.observe(el));
+    </script>
+</body>
+
+</html>
