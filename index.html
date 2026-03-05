@@ -6,9 +6,9 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>بيكسورا - النسخة النهائية المطورة</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700;800&family=Noto+Sans+Arabic:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Changa:wght@200..800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         rel="stylesheet" />
     <script id="tailwind-config">
@@ -23,7 +23,7 @@
                         "neutral-light": "#f9fafb",
                     },
                     fontFamily: {
-                        "display": ["Spline Sans", "Noto Sans Arabic", "sans-serif"]
+                        "display": ["Changa", "sans-serif"]
                     },
                     borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "3xl": "1.5rem", "full": "9999px" },
                 },
@@ -32,7 +32,7 @@
     </script>
     <style type="text/tailwindcss">
         body {
-            font-family: 'Noto Sans Arabic', 'Spline Sans', sans-serif;
+            font-family: "Changa", sans-serif;
         }
         .grid-lines {
             background-size: 40px 40px;
@@ -83,13 +83,19 @@
             @apply bg-white rounded-3xl overflow-hidden shadow-[0_10px_40px_-15px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_50px_-10px_rgba(236,19,19,0.15)] transition-all duration-500;
         }
         .pill-tab {
-            @apply px-8 py-3 rounded-full text-sm font-bold transition-all duration-300 border border-transparent;
+            @apply px-8 py-3 rounded-full text-sm font-bold transition-all duration-300 border border-transparent cursor-pointer;
         }
         .pill-tab.active {
             @apply bg-primary text-white shadow-lg shadow-primary/30;
         }
         .pill-tab:not(.active) {
             @apply bg-white text-slate-500 hover:border-primary/20 hover:text-primary;
+        }
+        /* Project hidden state for filtering */
+        .project-hidden {
+            display: none;
+            opacity: 0;
+            transform: scale(0.95);
         }
     </style>
 </head>
@@ -158,7 +164,7 @@
                 <span
                     class="text-[10px] font-bold text-primary uppercase tracking-widest bg-white/50 px-2 py-0.5 rounded">برمجة</span>
             </div>
-            <div class="absolute top-[30%] left-[25%] parallax-icon flex flex-col items-center gap-2 opacity-60 md:opacity-100"
+            <div class="absolute top-[13%] left-[19%] parallax-icon flex flex-col items-center gap-2 opacity-60 md:opacity-100"
                 style="animation-duration: 4.5s;">
                 <div
                     class="w-16 h-16 bg-white shadow-xl shadow-primary/10 rounded-2xl flex items-center justify-center border border-primary/10">
@@ -351,21 +357,24 @@
                                 بيكسورا</span>
                         </div>
                         <h2 class="text-5xl md:text-7xl font-black mb-8 text-slate-900 leading-[1.1]">نصنع مستقبلاً
-                            <span class="text-primary">رقمياً.</span></h2>
+                            <span class="text-primary">رقمياً.</span>
+                        </h2>
                     </div>
-                    <div class="flex flex-wrap gap-3 bg-white p-2 rounded-[2rem] shadow-sm border border-slate-100">
-                        <button class="pill-tab active">الكل</button>
-                        <button class="pill-tab">سوشيال ميديا</button>
-                        <button class="pill-tab">تطبيقات</button>
-                        <button class="pill-tab">فيديو</button>
-                        <button class="pill-tab">مواقع</button>
+                    <div
+                        class="flex flex-wrap gap-3 bg-white p-2 rounded-[2rem] shadow-sm border border-slate-100 filter-buttons">
+                        <button class="pill-tab active" data-filter="الكل">الكل</button>
+                        <button class="pill-tab" data-filter="سوشيال ميديا">سوشيال ميديا</button>
+                        <button class="pill-tab" data-filter="تطبيقات">تطبيقات</button>
+                        <button class="pill-tab" data-filter="فيديو">فيديو</button>
+                        <button class="pill-tab" data-filter="مواقع">مواقع</button>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-12 gap-8 lg:gap-12">
-                    <div class="col-span-12 lg:col-span-7 project-card group cursor-pointer reveal-on-scroll">
-                        <div class="relative aspect-[16/10] overflow-hidden">
-                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEqSX3wPlAkhb5LOPTuPeyRrujocIOxZyYNogF_koQ3gcUtCHfo0bEekBc6XguKLPUy2y4OMXeLz4IuonREEWOtxjl0SImtgDd5HPvpYo3gLILQj1cM17okOqIuOcfYU7-OFmwq-aUWC986bidOneR1qCdaOA6n2kR1gHYCe9D7Mrfqjp0zy8HjxU1SFzIimRm8Cj-cS1fm-MwpnEOcZjrd0I6LjtbNwaAcOgCOcpvWFhUOkCU4GVSIzsQFEI9iwAi6h9sj8nwNRU"
+                <div class="grid grid-cols-12 gap-8 lg:gap-12 projects-container">
+                    <div class="col-span-12 lg:col-span-7 project-card group cursor-pointer reveal-on-scroll p-2"
+                        data-category="مواقع">
+                        <div class="relative aspect-[16/9] overflow-hidden">
+                            <img src="Screenshot_5-3-2026_204344_sukoon-nine.vercel.app.jpeg"
                                 class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                             <div
                                 class="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
@@ -373,35 +382,36 @@
                         </div>
                         <div class="p-8 lg:p-10 flex justify-between items-end">
                             <div>
-                                <span class="text-primary font-bold text-sm mb-2 block">برمجة وتطوير</span>
-                                <h3 class="text-3xl font-black text-slate-900">منصة بيكسورا داشبورد</h3>
+                                <span class="text-primary font-bold text-sm mb-2 block">مواقع</span>
+                                <h3 class="text-3xl font-black text-slate-900">متجر الكتروتى للعطور</h3>
                             </div>
-                            <div
+                            <a href="https://sukoon-nine.vercel.app/"
                                 class="size-14 rounded-full border border-slate-200 flex items-center justify-center group-hover:bg-primary group-hover:border-primary group-hover:text-white transition-all duration-300">
                                 <span class="material-symbols-outlined">arrow_outward</span>
-                            </div>
+                            </a>
                         </div>
                     </div>
 
-                    <div class="col-span-12 lg:col-span-5 project-card group cursor-pointer reveal-on-scroll">
-                        <div class="relative aspect-[4/5] overflow-hidden">
-                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6l6gT-Au3VTLzsfNBb4OOODp5lJGnEGG6I39NXTmloxI0HzXEC3UNXls4-7TJ4ITzo2tR7wQ0k1-yD2ZKjLuytA1VgNwY0IZiYiuKQFmq7xh_pO9uosLj67rZcMSu6ljcdB8LFvMex18547uHnjNCzvF6vP-duKyvNIWjFkAzDWarkiO9BPQW3MXkC-GU50TXknwzZRkt_R2gi-TqHMagKgWshNacTAecl5uziJr9h6lFQYVFR0lmON4m--P90hcZv_VBT6U_Mlk"
+                    <div class="col-span-12 lg:col-span-5 project-card group cursor-pointer reveal-on-scroll"
+                        data-category="مواقع">
+                        <div class="relative aspect-[4/3] overflow-hidden">
+                            <img src="screenshot-1753458935418 (1).jpeg"
                                 class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                         </div>
                         <div class="p-8 flex justify-between items-end">
                             <div>
-                                <span class="text-primary font-bold text-sm mb-2 block">تطبيقات الجوال</span>
-                                <h3 class="text-2xl font-black text-slate-900">تطبيق وصلني الذكي</h3>
+                                <span class="text-primary font-bold text-sm mb-2 block">مواقع</span>
+                                <h3 class="text-2xl font-black text-slate-900">منصة تعليمية </h3>
                             </div>
-                            <div
+                            <a href="https://med-aplus.com/"
                                 class="size-12 rounded-full border border-slate-200 flex items-center justify-center group-hover:bg-primary group-hover:border-primary group-hover:text-white transition-all duration-300">
                                 <span class="material-symbols-outlined">arrow_outward</span>
-                            </div>
+                            </a>
                         </div>
                     </div>
 
                     <div
-                        class="col-span-12 my-12 py-16 bg-primary rounded-[3rem] relative overflow-hidden flex flex-wrap justify-around items-center gap-12 text-center shadow-2xl reveal-on-scroll">
+                        class="col-span-12 my-12 py-16 bg-primary rounded-[3rem] relative overflow-hidden flex flex-wrap justify-around items-center gap-12 text-center shadow-2xl reveal-on-scroll stats-bar">
                         <div
                             class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10">
                         </div>
@@ -423,7 +433,8 @@
                         </div>
                     </div>
 
-                    <div class="col-span-12 md:col-span-4 project-card group cursor-pointer reveal-on-scroll">
+                    <div class="col-span-12 md:col-span-4 project-card group cursor-pointer reveal-on-scroll"
+                        data-category="سوشيال ميديا">
                         <div class="relative aspect-square overflow-hidden">
                             <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9cCoFm9sHlte6N7JsAlw6SFs9nfi8zoSaLhopSwMm6D1xEzfl-Dd8R9uezPobtDrvCziyx5-XjTz4oPt6YR8wfjUy2JDctO8P8u54d7_pAbxZgc46ii2ZlzaSPn9k4G3ZX7yXXWIYmZ0uzCoiAcFIC2wGUGLFrVOSuYCilUMaDkyoXaqL1wXqWyyfs3ENb6Ep8Uh-CwzK0WR4AtWOvc3OVwJ_Mi4dJotziv7VC05jUQwhkFxDNieZL2sluXPwxtuIAmLsT_NJw08"
                                 class="absolute inset-0 w-full h-full object-cover">
@@ -433,7 +444,8 @@
                         </div>
                     </div>
 
-                    <div class="col-span-12 md:col-span-8 project-card group cursor-pointer reveal-on-scroll">
+                    <div class="col-span-12 md:col-span-8 project-card group cursor-pointer reveal-on-scroll"
+                        data-category="فيديو">
                         <div class="relative aspect-[16/9] overflow-hidden">
                             <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqXQ2fEYyy4y2t6PBp--0wt1tzsNX9yfw7vKJkjcvZYxq2zamCO10a2zZoJv6fZ_Ng-UT6UJC-QOSd-tB0-ilCuqVGNojanC-Ue8g7yj64-qSQxHYVUshI3Bshs96lxUz_3FZNOkdwoBNquw0zEdhtxz9ZOW3GH2nea1W9UcRkkVi-_51YmhnXkNlYhwmrlu2gyIHM4IR5wFQeykbo3bA-0N4P2fTnrc9MLO-2BKcnN7xGL5LvZdtoZu-u_Z8nyLSXpZYeZt5w0bU"
                                 class="absolute inset-0 w-full h-full object-cover">
@@ -534,7 +546,9 @@
             </div>
         </footer>
     </div>
+
     <script>
+        // --- Intersection Observer for animations ---
         const observerOptions = { threshold: 0.1 };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -546,6 +560,34 @@
             });
         }, observerOptions);
         document.querySelectorAll('.reveal-on-scroll').forEach((el) => observer.observe(el));
+
+        // --- Portfolio Filtering Logic ---
+        const filterButtons = document.querySelectorAll('.filter-buttons .pill-tab');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // 1. Update active state of buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                // 2. Get filter value
+                const filterValue = button.getAttribute('data-filter');
+
+                // 3. Filter projects
+                projectCards.forEach(card => {
+                    const category = card.getAttribute('data-category');
+
+                    if (filterValue === 'الكل' || category === filterValue) {
+                        card.classList.remove('project-hidden');
+                        // Optional: Re-trigger animation or fade-in
+                        card.style.opacity = '1';
+                    } else {
+                        card.classList.add('project-hidden');
+                    }
+                });
+            });
+        });
     </script>
 </body>
 
